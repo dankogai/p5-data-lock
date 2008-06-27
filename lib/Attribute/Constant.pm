@@ -2,16 +2,19 @@ package Attribute::Constant;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 0.1 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 0.2 $ =~ /(\d+)/g;
 use Attribute::Handlers;
 use Data::Lock ();
 
 sub UNIVERSAL::Constant : ATTR {
     my ( $pkg, $sym, $ref, $attr, $data, $phase ) = @_;
-    (     ref $ref eq 'HASH'  ? %$ref
+    (
+          ref $ref eq 'HASH'  ? %$ref
         : ref $ref eq 'ARRAY' ? @$ref
-        :                      ($$ref)
-    ) = @$data;
+        : ($$ref)
+      ) = ref $data
+	  ? ref $data eq 'ARRAY' ? @$data # perl 5.10.x
+	  : $data : $data;                # perl 5.8.x
     Data::Lock::dlock($ref);
 }
 
@@ -24,7 +27,7 @@ Attribute::Constant - Make read-only variables via attribute
 
 =head1 VERSION
 
-$Id: Constant.pm,v 0.1 2008/06/27 19:11:42 dankogai Exp dankogai $
+$Id: Constant.pm,v 0.2 2008/06/27 19:50:52 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
@@ -44,6 +47,24 @@ This module adds only one attribute, C<Constant>.  You give its
 initial value as shown.  Unlike L<Readonly>, parantheses cannot be
 ommited but it is semantically more elegant and thanks to
 L<Data::Lock>, it imposes almost no performance penalty.
+
+=head1 CAVEAT
+
+Multi-line attributes are not allowed in Perl 5.8.x.
+
+  my $o : Constant(Foo->new(1,2,3)) # ok;
+  my $p : Constant(Bar->new(
+			    1,2,3
+			   )
+		  )                 # needs Perl 5.10
+
+In which case you can use L<Data::Lock> instead:
+
+  dlock(my $p = Bar->new(
+			 1, 2, 3
+			));
+
+After all, this module is a wrapper to L<Data::Lock>;
 
 =head1 BENCHMARK
 

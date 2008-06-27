@@ -1,6 +1,6 @@
 #!perl -T
 #
-# $Id: 01-atomic.t,v 0.1 2008/06/27 19:11:42 dankogai Exp dankogai $
+# $Id: 01-atomic.t,v 0.1 2008/06/27 19:11:42 dankogai Exp $
 #
 use strict;
 use warnings;

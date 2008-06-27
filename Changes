@@ -1,8 +1,12 @@
 # Revision history for Attribute-Constant
 #
-# $Id: Changes,v 0.1 2008/06/27 19:11:42 dankogai Exp dankogai $
+# $Id: Changes,v 0.2 2008/06/27 19:50:52 dankogai Exp dankogai $
 #
-$Revision: 0.1 $ $Date: 2008/06/27 19:11:42 $
+$Revision: 0.2 $ $Date: 2008/06/27 19:50:52 $
+! lib/Attribute/Constant.pm  t/03-obj.t
+  Perl 5.8.x supported -- with caveats.  See POD
+
+0.01 2008/06/27 19:11:42
 + * 
   First Release.
 
