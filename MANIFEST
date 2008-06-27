@@ -1,0 +1,14 @@
+Changes
+lib/Attribute/Constant.pm
+lib/Data/Lock.pm
+Makefile.PL
+MANIFEST
+README
+t/00-load.t
+t/01-atomic.t
+t/02-avhv.t
+t/03-obj.t
+t/04-dlock.t
+t/benchmark.pl
+t/pod-coverage.t
+t/pod.t
