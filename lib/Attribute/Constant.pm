@@ -52,17 +52,22 @@ L<Data::Lock>, it imposes almost no performance penalty.
 
 Multi-line attributes are not allowed in Perl 5.8.x.
 
-  my $o : Constant(Foo->new(1,2,3)) # ok;
+  my $o : Constant(Foo->new(one=>1,two=>2,three=>3));    # ok
   my $p : Constant(Bar->new(
-			    1,2,3
-			   )
-		  )                 # needs Perl 5.10
+                            one   =>1,
+                            two   =>2,
+                            three =>3
+                           )
+                 ); # needs Perl 5.10
 
 In which case you can use L<Data::Lock> instead:
 
   dlock(my $p = Bar->new(
-			 1, 2, 3
-			));
+        one   => 1,
+        two   => 2,
+        three => 3
+    )
+  );
 
 After all, this module is a wrapper to L<Data::Lock>;
 

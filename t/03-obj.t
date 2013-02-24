@@ -5,8 +5,9 @@
 use strict;
 use warnings;
 use Attribute::Constant;
+use Data::Lock qw/dlock dunlock/;
 #use Test::More 'no_plan';
-use Test::More tests => 10;
+use Test::More tests => 14;
 
 {
     package Foo;
@@ -21,6 +22,10 @@ use Test::More tests => 10;
     eval{ $o = Foo->new(foo=>2) };
     ok $@, $@;
     eval{ $o->set(2) };
+    ok $@, '$o->set(2)' . ': ' . $@;
+    is $o->get, 1, '$o->get == 1';
+    dunlock($o);
+    eval{ $o->set(2) };
     ok !$@, '$o->set(2)';
     is $o->get, 2, '$o->get == 2';
 }
@@ -33,6 +38,10 @@ SKIP: {
     is $o->get, 1, '$o->get == 1';
     eval{ $o = Foo->new(foo=>2) };
     ok $@, $@;
+    eval{ $o->set(2) };
+    ok $@, '$o->set(2)' . ': ' . $@;
+    is $o->get, 1, '$o->get == 1';
+    dunlock($o);
     eval{ $o->set(2) };
     ok !$@, '$o->set(2)';
     is $o->get, 2, '$o->get == 2';

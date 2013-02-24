@@ -17,23 +17,21 @@ for my $locked ( 0, 1 ) {
     my $subname = $locked ? 'dlock' : 'dunlock';
     no strict 'refs';
     *{$subname} = sub {
-        if ( !Scalar::Util::blessed( $_[0] ) ) {
-            my $type = ref $_[0];
-            for (
-                  $type eq 'ARRAY' ? @{ $_[0] }
-                : $type eq 'HASH'  ? values %{ $_[0] }
-                : $type ne 'CODE' ? ${ $_[0] }
-                : ()
-              )
-            {
-                dlock($_) if ref $_;
-                Internals::SvREADONLY( $_, $locked );
-            }
-                $type eq 'ARRAY' ? Internals::SvREADONLY( @{ $_[0] }, $locked )
-              : $type eq 'HASH'  ? Internals::SvREADONLY( %{ $_[0] }, $locked )
-              : $type ne 'CODE'  ? Internals::SvREADONLY( ${ $_[0] }, $locked )
-              :                    undef;
+        my $type = Scalar::Util::reftype( $_[0] );
+        for (
+              $type eq 'ARRAY' ? @{ $_[0] }
+            : $type eq 'HASH'  ? values %{ $_[0] }
+            : $type ne 'CODE'  ? ${ $_[0] }
+            :                    ()
+          )
+        {
+            dlock($_) if ref $_;
+            Internals::SvREADONLY( $_, $locked );
         }
+            $type eq 'ARRAY' ? Internals::SvREADONLY( @{ $_[0] }, $locked )
+          : $type eq 'HASH'  ? Internals::SvREADONLY( %{ $_[0] }, $locked )
+          : $type ne 'CODE'  ? Internals::SvREADONLY( ${ $_[0] }, $locked )
+          :                    undef;
         Internals::SvREADONLY( $_[0], $locked );
     };
 }
@@ -65,39 +63,22 @@ $Id: Lock.pm,v 0.2 2008/06/27 19:50:52 dankogai Exp dankogai $
 =head1 DESCRIPTION
 
 C<dlock> makes the specified variable immutable like L<Readonly>.
-Unlike L<Readonly> which implements immutability via C<tie>, C<dlock> 
-makes use of the internal flag of perl SV so it imposes almost no 
+Unlike L<Readonly> which implements immutability via C<tie>, C<dlock>
+makes use of the internal flag of perl SV so it imposes almost no
 penalty.
 
-Like L<Readonly>, L<dlock> locks not only the variable itself but also
+Like L<Readonly>, C<dlock> locks not only the variable itself but also
 elements therein.
 
-The only exception is objects.  It does NOT lock its internals and for
-good reason.
-
-Suppose you have a typical class like:
-
-  package Foo;
-  sub new     { my $pkg = shift; bless { @_ }, $pkg }
-  sub get_foo { $_[0]->{foo} }
-  sub set_foo { $_[0]->{foo} = $_[1] };
-
-And
-
-  dlock( my $o = Foo->new(foo=>1) );
-
-You cannot change $o but you can still use mutators.
-
-  $o = Foo->new(foo => 2); # BOOM!
-  $o->set_foo(2);          # OK
-
-
-If you want to make C<< $o->{foo} >> immutable, Define Foo::new like:
+As of verion 0.03, you can C<dlock> objects as well.  Below is an
+example constructor that returns an immutable object:
 
   sub new {
       my $pkg = shift; 
-      dlock(my $self = { @_ });
-      bless $self, $pkg
+      my $self = { @_ };
+      bless $self, $pkg;
+      dlock($self);
+      $self;
   }
 
 Or consider using L<Moose>.
@@ -128,7 +109,7 @@ L<Readonly>, L<perlguts>, L<perlapi>
 
 =head1 AUTHOR
 
-Dan Kogai, C<< <dankogai at dan.co.jp> >>
+Dan Kogai, C<< <dankogai+gmail at gmail.com> >>
 
 =head1 BUGS & SUPPORT
 

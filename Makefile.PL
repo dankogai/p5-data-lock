@@ -8,7 +8,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     NAME                => 'Attribute::Constant',
-    AUTHOR              => 'Dan Kogai <dankogai@dan.co.jp>',
+    AUTHOR              => 'Dan Kogai <dankogai+cpan@gmail.com>',
     VERSION_FROM        => 'lib/Attribute/Constant.pm',
     ABSTRACT_FROM       => 'lib/Attribute/Constant.pm',
     PL_FILES            => {},
