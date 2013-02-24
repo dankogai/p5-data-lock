@@ -110,7 +110,7 @@ L<Data::Lock>, L<constant>
 
 =head1 AUTHOR
 
-Dan Kogai, C<< <dankogai at dan.co.jp> >>
+Dan Kogai, C<< <dankogai+cpan at gmail.com> >>
 
 =head1 BUGS
 
