@@ -3,6 +3,11 @@
 # $Id: Changes,v 0.2 2008/06/27 19:50:52 dankogai Exp dankogai $
 #
 $Revision: 0.2 $ $Date: 2008/06/27 19:50:52 $
+! *.pm t/03-obj.t
+  You can now dlock() and dunlock() objects
+  https://rt.cpan.org/Ticket/Display.html?id=62021
+
+0.02 2008/06/27 19:50:52
 ! lib/Attribute/Constant.pm  t/03-obj.t
   Perl 5.8.x supported -- with caveats.  See POD
 
