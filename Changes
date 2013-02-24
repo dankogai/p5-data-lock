@@ -1,8 +1,8 @@
 # Revision history for Attribute-Constant
 #
-# $Id: Changes,v 0.2 2008/06/27 19:50:52 dankogai Exp dankogai $
+# $Id: Changes,v 0.3 2013/02/24 07:03:27 dankogai Exp dankogai $
 #
-$Revision: 0.2 $ $Date: 2008/06/27 19:50:52 $
+$Revision: 0.3 $ $Date: 2013/02/24 07:03:27 $
 ! *.pm t/03-obj.t
   You can now dlock() and dunlock() objects
   https://rt.cpan.org/Ticket/Display.html?id=62021

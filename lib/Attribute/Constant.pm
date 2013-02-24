@@ -2,7 +2,7 @@ package Attribute::Constant;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 0.2 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 0.3 $ =~ /(\d+)/g;
 use Attribute::Handlers;
 use Data::Lock ();
 
@@ -27,7 +27,7 @@ Attribute::Constant - Make read-only variables via attribute
 
 =head1 VERSION
 
-$Id: Constant.pm,v 0.2 2008/06/27 19:50:52 dankogai Exp dankogai $
+$Id: Constant.pm,v 0.3 2013/02/24 07:03:27 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
