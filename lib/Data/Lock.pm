@@ -45,7 +45,7 @@ Data::Lock - makes variables (im)?mutable
 
 =head1 VERSION
 
-$Id: Lock.pm,v 0.3 2013/02/24 07:03:27 dankogai Exp dankogai $
+$Id: Lock.pm,v 0.3 2013/02/24 07:03:27 dankogai Exp $
 
 =head1 SYNOPSIS
 
