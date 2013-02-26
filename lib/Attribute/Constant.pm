@@ -11,10 +11,13 @@ sub UNIVERSAL::Constant : ATTR {
     (
           ref $ref eq 'HASH'  ? %$ref
         : ref $ref eq 'ARRAY' ? @$ref
-        : ($$ref)
-      ) = ref $data
-	  ? ref $data eq 'ARRAY' ? @$data # perl 5.10.x
-	  : $data : $data;                # perl 5.8.x
+        :                       ($$ref)
+      )
+      = ref $data
+      ? ref $data eq 'ARRAY'
+          ? @$data    # perl 5.10.x
+          : $data
+      : $data;        # perl 5.8.x
     Data::Lock::dlock($ref);
 }
 
@@ -38,8 +41,8 @@ $Id: Constant.pm,v 0.3 2013/02/24 07:03:27 dankogai Exp dankogai $
 
 =head1 DESCRIPTION
 
-This module uses L<Data::Lock> to make the variable read-only.  
-Check the document and source of  L<Data::Lock> for its mechanism.
+This module uses L<Data::Lock> to make the variable read-only.  Check
+the document and source of L<Data::Lock> for its mechanism.
 
 =head1 ATTRIBUTES
 
@@ -100,7 +103,7 @@ See F<t/benchmark.pl> for details.
 
                 Rate  Readonly Attribute
   Readonly    6979/s        --      -97%
-  Attribute 207526/s     2874% 
+  Attribute 207526/s     2874%
 
 =back
 

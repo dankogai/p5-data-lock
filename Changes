@@ -3,6 +3,10 @@
 # $Id: Changes,v 0.3 2013/02/24 07:03:27 dankogai Exp dankogai $
 #
 $Revision: 0.3 $ $Date: 2013/02/24 07:03:27 $
+! t/03-obj.t
+  Wrong Skip count was causing failure for perl 5.9 and below
+
+0.03 2013/02/24 07:03:27
 ! *.pm t/03-obj.t
   You can now dlock() and dunlock() objects
   https://rt.cpan.org/Ticket/Display.html?id=62021

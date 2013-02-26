@@ -30,7 +30,7 @@ use Test::More tests => 14;
     is $o->get, 2, '$o->get == 2';
 }
 SKIP: {
-    skip 'Perl 5.9.5 or better required', 5 unless $] >= 5.009005;
+    skip 'Perl 5.9.5 or better required', 7 unless $] >= 5.009005;
     my $o : Constant( 
 		     Foo->new(foo=>1) 
 		    );
