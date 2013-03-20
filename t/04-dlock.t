@@ -1,13 +1,13 @@
 #!perl -T
 #
-# $Id: 04-dlock.t,v 0.1 2008/06/27 19:11:42 dankogai Exp $
+# $Id: 04-dlock.t,v 0.3 2013/03/20 22:17:40 dankogai Exp dankogai $
 #
 use strict;
 use warnings;
 use Data::Lock qw/dlock dunlock/;
 
 #use Test::More 'no_plan';
-use Test::More tests => 10;
+use Test::More tests => 17;
 
 {
     dlock( my $a = [ 0, 1, 2, 3 ] );
@@ -33,7 +33,31 @@ use Test::More tests => 10;
     ok !$@, '$h->{one}--';
     is_deeply { one => 0, two => 2 }, $h, '$h => {one=>0, two=>2}';
 }
-
+{
+    my $a = [];
+    $a->[0] = $a;
+    dlock $a;
+    eval { pop @$a };
+    ok $@, $@;
+    dunlock $a;
+    eval { pop @$a };
+    ok !$@ && @$a == 0, '$a => [$a]'
+}
+{
+    dlock( my $s = 0 );
+    eval { ++$s };
+    ok $@, $@;
+    dunlock $s;
+    eval { ++$s };
+    ok !$@, '++$s';
+    is $s, 1, '$s => 1';
+}
+{
+    eval { dlock "" };
+    ok !$@, "dlock on constant is no-op";
+    eval { dunlock "" };
+    ok !$@, "dunlock on constant is no-op";
+}
 
 __END__
 #SCALAR
@@ -47,18 +71,3 @@ HASH
 #IO
 #VSTRING
 #Regexp
-
-
-__END__
-#SCALAR
-ARRAY
-HASH
-#CODE
-#REF
-#GLOB
-#LVALUE
-#FORMAT
-#IO
-#VSTRING
-#Regexp
-

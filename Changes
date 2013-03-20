@@ -1,8 +1,18 @@
 # Revision history for Attribute-Constant
 #
-# $Id: Changes,v 0.4 2013/02/26 03:19:02 dankogai Exp dankogai $
+# $Id: Changes,v 0.5 2013/03/20 22:17:40 dankogai Exp dankogai $
 #
-$Revision: 0.4 $ $Date: 2013/02/26 03:19:02 $
+$Revision: 0.5 $ $Date: 2013/03/20 22:17:40 $
+! lib/Data/Lock.pm t/04-dlock.t
+  Fixed: d(un)?lock vs. circular reference
+
+0.05 2013/03/20 22:17:40
+! lib/Data/Lock.pm t/04-dlock.t
+  Addressed: dlock("0") locks $0
+  dlock() and dunlock now simply ignores constants.
+  https://rt.cpan.org/Public/Bug/Display.html?id=84092
+
+0.04 2013/02/26 03:19:02
 ! t/03-obj.t
   Wrong Skip count was causing failure for perl 5.9 and below
 

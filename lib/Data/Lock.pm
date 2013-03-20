@@ -2,7 +2,7 @@ package Data::Lock;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 0.3 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 0.4 $ =~ /(\d+)/g;
 
 use Attribute::Handlers;
 use Scalar::Util ();
@@ -17,6 +17,9 @@ for my $locked ( 0, 1 ) {
     my $subname = $locked ? 'dlock' : 'dunlock';
     no strict 'refs';
     *{$subname} = sub {
+        no warnings "uninitialized";
+        return if Internals::SvREADONLY( $_[0]) == $locked;
+        Internals::SvREADONLY( $_[0], $locked );
         my $type = Scalar::Util::reftype( $_[0] );
         for (
               $type eq 'ARRAY' ? @{ $_[0] }
@@ -25,14 +28,13 @@ for my $locked ( 0, 1 ) {
             :                    ()
           )
         {
-            dlock($_) if ref $_;
+            &$subname($_) if ref $_;
             Internals::SvREADONLY( $_, $locked );
         }
             $type eq 'ARRAY' ? Internals::SvREADONLY( @{ $_[0] }, $locked )
           : $type eq 'HASH'  ? Internals::SvREADONLY( %{ $_[0] }, $locked )
           : $type ne 'CODE'  ? Internals::SvREADONLY( ${ $_[0] }, $locked )
           :                    undef;
-        Internals::SvREADONLY( $_[0], $locked );
     };
 }
 
@@ -45,7 +47,7 @@ Data::Lock - makes variables (im)?mutable
 
 =head1 VERSION
 
-$Id: Lock.pm,v 0.3 2013/02/24 07:03:27 dankogai Exp $
+$Id: Lock.pm,v 0.4 2013/03/20 22:17:40 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
