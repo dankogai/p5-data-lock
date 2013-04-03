@@ -1,8 +1,8 @@
 # Revision history for Data-Lock
 #
-# $Id: Changes,v 0.5 2013/03/20 22:17:40 dankogai Exp dankogai $
+# $Id: Changes,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
 #
-$Revision: 0.5 $ $Date: 2013/03/20 22:17:40 $
+$Revision: 1.0 $ $Date: 2013/04/03 06:49:25 $
 ! *
   Distro renamed from Attribute-Constant to Data-Lock.
   The use of Attribute is somewhat deprecated these days.

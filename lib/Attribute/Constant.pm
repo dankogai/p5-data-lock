@@ -2,7 +2,7 @@ package Attribute::Constant;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 0.6 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 1.0 $ =~ /(\d+)/g;
 use Attribute::Handlers;
 use Data::Lock ();
 
@@ -30,7 +30,7 @@ Attribute::Constant - Make read-only variables via attribute
 
 =head1 VERSION
 
-$Id: Constant.pm,v 0.6 2013/03/20 22:37:04 dankogai Exp dankogai $
+$Id: Constant.pm,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
@@ -53,6 +53,8 @@ L<Data::Lock>, it imposes almost no performance penalty.
 
 =head1 CAVEAT
 
+=head2 Multi-line attributes
+
 Multi-line attributes are not allowed in Perl 5.8.x.
 
   my $o : Constant(Foo->new(one=>1,two=>2,three=>3));    # ok
@@ -73,6 +75,51 @@ In which case you can use L<Data::Lock> instead:
   );
 
 After all, this module is a wrapper to L<Data::Lock>;
+
+=head2 Constants from Variables
+
+You may be surprised the following code B<DOES NOT> work as you expected:
+
+  #!/usr/bin/perl
+  use strict;
+  use warnings;
+  use Attribute::Constant;
+  use Data::Dumper;
+  {
+    package MyClass;
+    sub new {
+        my ( $class, %params ) = @_;
+        return bless \%params, $class;
+    }
+  }
+  my $o = MyClass->new( a => 1, b => 2 );
+  my $x : Constant($o);
+  print Dumper( $o, $x );
+
+Which outputs:
+
+  $VAR1 = bless( {
+                 'a' => 1,
+                 'b' => 2
+               }, 'MyClass' );
+  $VAR2 = undef;
+
+Why?  Because C< $x : Constant($o) > happens B<before>
+C<< $o = Myclass->new() >>.
+
+On the other hand, the following works.
+
+  my $y : Constant(MyClass->new(a => 1,b => 2));
+  print Dumper( $o, $y );
+
+Rule of the thumb is do not feed variables to constant because
+varialbes change after the attribute invocation.
+
+Or simply use C<Data::Lock::dlock>.
+
+  use Data::Lock qw/dlock/;
+  dlock my $z = $o;
+  print Dumper( $o, $y );
 
 =head1 BENCHMARK
 
@@ -115,41 +162,9 @@ L<Data::Lock>, L<constant>
 
 Dan Kogai, C<< <dankogai+cpan at gmail.com> >>
 
-=head1 BUGS
+=head1 BUGS & SUPPORT
 
-Please report any bugs or feature requests to C<bug-attribute-constant
-at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Attribute-Constant>.
-I will be notified, and then you'll automatically be notified of
-progress on your bug as I make changes.
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Attribute::Constant
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Attribute-Constant>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Attribute-Constant>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Attribute-Constant>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Attribute-Constant>
-
-=back
+See L<Data::Lock>.
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -157,8 +172,7 @@ L<Readonly>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Dan Kogai, all rights reserved.
+Copyright 2008-2013 Dan Kogai, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-

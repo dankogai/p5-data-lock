@@ -2,7 +2,7 @@ package Data::Lock;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 0.4 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 1.0 $ =~ /(\d+)/g;
 
 use Attribute::Handlers;
 use Scalar::Util ();
@@ -47,7 +47,7 @@ Data::Lock - makes variables (im)?mutable
 
 =head1 VERSION
 
-$Id: Lock.pm,v 0.4 2013/03/20 22:17:40 dankogai Exp dankogai $
+$Id: Lock.pm,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
@@ -76,7 +76,7 @@ As of verion 0.03, you can C<dlock> objects as well.  Below is an
 example constructor that returns an immutable object:
 
   sub new {
-      my $pkg = shift; 
+      my $pkg = shift;
       my $self = { @_ };
       bless $self, $pkg;
       dlock($self);
@@ -113,14 +113,45 @@ L<Readonly>, L<perlguts>, L<perlapi>
 
 Dan Kogai, C<< <dankogai+gmail at gmail.com> >>
 
-=head1 BUGS & SUPPORT
+=head1 BUGS
 
-See L<Attribute::Constant>.
+Please report any bugs or feature requests to C<bug-data-lock at
+rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Data-Lock>.  I will
+be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc Data::Lock
+
+You can also look for information at:
+
+=over 4
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Data-Lock>
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/Data-Lock>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/Data-Lock>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/Data-Lock>
+
+=back
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Dan Kogai, all rights reserved.
+Copyright 2008-2013 Dan Kogai, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
