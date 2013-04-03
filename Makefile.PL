@@ -7,14 +7,14 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME                => 'Attribute::Constant',
+    NAME                => 'Data::Lock',
     AUTHOR              => 'Dan Kogai <dankogai+cpan@gmail.com>',
-    VERSION_FROM        => 'lib/Attribute/Constant.pm',
-    ABSTRACT_FROM       => 'lib/Attribute/Constant.pm',
+    VERSION_FROM        => 'lib/Data/Lock.pm',
+    ABSTRACT_FROM       => 'lib/Data/Lock.pm',
     PL_FILES            => {},
     PREREQ_PM => {
         'Test::More' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'Attribute-Constant-*' },
+    clean               => { FILES => 'Data-Lock-*' },
 );
