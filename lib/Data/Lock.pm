@@ -2,7 +2,7 @@ package Data::Lock;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 1.0 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 1.1 $ =~ /(\d+)/g;
 
 use Attribute::Handlers;
 use Scalar::Util ();
@@ -47,17 +47,15 @@ Data::Lock - makes variables (im)?mutable
 
 =head1 VERSION
 
-$Id: Lock.pm,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
+$Id: Lock.pm,v 1.1 2013/04/03 14:37:57 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
    use Data::Lock qw/dlock dunlock/;
 
-   # note parentheses and equal
-
-   dlock( my $sv = $initial_value );
-   dlock( my $ar = [@values] );
-   dlock( my $hr = { key => value, key => value, ... } );
+   dlock my $sv = $initial_value;
+   dlock my $ar = [@values];
+   dlock my $hr = { key => value, key => value, ... };
    dunlock $sv;
    dunlock $ar; dunlock \@av;
    dunlock $hr; dunlock \%hv;
@@ -104,6 +102,42 @@ Locks $scalar and if $scalar is a reference, recursively locks referents.
 =head2 dunlock
 
 Does the opposite of C<dlock>.
+
+=head1 BENCHMARK
+
+Here I have benchmarked like this.
+
+  1.  Create an immutable variable.
+  2.  try to change it and see if it raises exception
+  3.  make sure the value stored remains unchanged.
+
+See F<t/benchmark.pl> for details.
+
+=over 2
+
+=item Simple scalar
+
+                Rate  Readonly Attribute      glob     dlock
+  Readonly   11987/s        --      -98%      -98%      -98%
+  Attribute 484562/s     3943%        --       -1%       -4%
+  glob      487239/s     3965%        1%        --       -3%
+  dlock     504247/s     4107%        4%        3%        --
+
+=item Array with 1000 entries
+
+                Rate  Readonly     dlock Attribute
+  Readonly   12396/s        --      -97%      -97%
+  dlock     444703/s     3488%        --       -6%
+  Attribute 475557/s     3736%        7%        --
+
+=item Hash with 1000 key/value pairs
+
+                Rate  Readonly     dlock Attribute
+  Readonly   10855/s        --      -97%      -97%
+  dlock     358867/s     3206%        --       -5%
+  Attribute 377087/s     3374%        5%        --
+
+=back
 
 =head1 SEE ALSO
 

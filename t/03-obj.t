@@ -1,6 +1,6 @@
 #!perl -T
 #
-# $Id: 03-obj.t,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
+# $Id: 03-obj.t,v 1.0 2013/04/03 06:49:25 dankogai Exp $
 #
 use strict;
 use warnings;

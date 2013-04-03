@@ -1,8 +1,13 @@
 # Revision history for Data-Lock
 #
-# $Id: Changes,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
+# $Id: Changes,v 1.1 2013/04/03 14:37:57 dankogai Exp dankogai $
 #
-$Revision: 1.0 $ $Date: 2013/04/03 06:49:25 $
+$Revision: 1.1 $ $Date: 2013/04/03 14:37:57 $
+! lib/*/*.pm t/benchmark.t
+  + Revised POD
+  + updated benchmark
+
+1.00 2013/04/03 06:49:25
 ! *
   Distro renamed from Attribute-Constant to Data-Lock.
   The use of Attribute is somewhat deprecated these days.

@@ -2,7 +2,7 @@ package Attribute::Constant;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 1.0 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 1.1 $ =~ /(\d+)/g;
 use Attribute::Handlers;
 use Data::Lock ();
 
@@ -30,7 +30,7 @@ Attribute::Constant - Make read-only variables via attribute
 
 =head1 VERSION
 
-$Id: Constant.pm,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
+$Id: Constant.pm,v 1.1 2013/04/03 14:37:57 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
@@ -120,39 +120,6 @@ Or simply use C<Data::Lock::dlock>.
   use Data::Lock qw/dlock/;
   dlock my $z = $o;
   print Dumper( $o, $y );
-
-=head1 BENCHMARK
-
-Here I have benchmarked like this.
-
-  1.  Create an immutable variable.
-  2.  try to change it and see if it raises exception
-  3.  make sure the value stored remains unchanged.
-
-See F<t/benchmark.pl> for details.
-
-=over 2
-
-=item Simple scalar
-
-                Rate  Readonly      glob Attribute
-  Readonly    7803/s        --      -97%      -97%
-  glob      281666/s     3510%        --       -5%
-  Attribute 295780/s     3691%        5%        --
-
-=item Array with 1000 entries
-
-                Rate  Readonly Attribute
-  Readonly    8589/s        --      -97%
-  Attribute 278755/s     3145%        --
-
-=item Hash with 1000 key/value pairs
-
-                Rate  Readonly Attribute
-  Readonly    6979/s        --      -97%
-  Attribute 207526/s     2874%
-
-=back
 
 =head1 SEE ALSO
 

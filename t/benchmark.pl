@@ -1,13 +1,15 @@
 #!perl
 #
-# $Id: benchmark.pl,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
+# $Id: benchmark.pl,v 1.1 2013/04/03 14:37:57 dankogai Exp dankogai $
 #
 use strict;
 use warnings;
 use Benchmark qw/timethese cmpthese/;
+use Data::Lock qw/dlock dunlock/;
 use Attribute::Constant;
 use Readonly;
 
+dlock my $sd = 1;
 my $sa : Constant(1);
 Readonly my $sr => 1;
 local *sg = \1; our $sg;
@@ -16,6 +18,9 @@ cmpthese(
     timethese(
         0,
         {
+            dlock => sub {
+                eval { $sd++ }; die unless $@; $sd == 1 or die;
+            },
             Attribute => sub{
                 eval { $sa++ }; die unless $@; $sa == 1 or die;
             },
@@ -29,6 +34,7 @@ cmpthese(
     )
 );
 
+dlock my $da = [ 1 .. 1000 ];
 my @aa : Constant( 1 .. 1000 );
 Readonly my @ar => ( 1 .. 1000 );
 
@@ -36,6 +42,9 @@ cmpthese(
     timethese(
         0,
         {
+            dlock => sub{
+		eval { pop @$da }; die unless $@; $da->[0] == 1 or die;
+	    },
             Attribute => sub{
 		eval { pop @aa }; die unless $@; $aa[0] == 1 or die;
 	    },
@@ -46,6 +55,7 @@ cmpthese(
     )
 );
 
+dlock my $dh = { map { $_ => $_*$_ } 1 .. 1000 }; 
 my %ha : Constant( map { $_ => $_*$_ } 1 .. 1000 );
 Readonly my %hr => ( map { $_ => $_ * $_ } 1 .. 1000 );
 
@@ -53,6 +63,9 @@ cmpthese(
     timethese(
         0,
         {
+            dlock => sub{
+		eval { $dh->{zero}++ }; die unless $@; $dh->{1000} == 1e6 or die;
+	    },
 	    Attribute => sub{
 		eval { $ha{zero}++ }; die unless $@; $ha{1000} == 1e6 or die;
 	    },

@@ -2,7 +2,7 @@
 
 Data-Lock
 
-$Id: README.md,v 1.0 2013/04/03 06:49:25 dankogai Exp dankogai $
+$Id: README.md,v 1.0 2013/04/03 06:49:25 dankogai Exp $
 
 This distribution contains Data::Lock and Attribute::Constant.
 
