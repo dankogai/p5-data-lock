@@ -4,6 +4,7 @@ lib/Data/Lock.pm
 Makefile.PL
 MANIFEST
 README
+README.md
 t/00-load.t
 t/01-atomic.t
 t/02-avhv.t
