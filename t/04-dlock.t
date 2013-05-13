@@ -7,7 +7,7 @@ use warnings;
 use Data::Lock qw/dlock dunlock/;
 
 #use Test::More 'no_plan';
-use Test::More tests => 17;
+use Test::More tests => 27;
 
 {
     dlock( my $a = [ 0, 1, 2, 3 ] );
@@ -22,6 +22,19 @@ use Test::More tests => 17;
     is_deeply [ -1, 1, 2, 3 ], $a, '$a => [-1,1,2,3]';
 }
 {
+    my @a = (0, 1, 2, 3);
+    dlock \@a;
+    is_deeply [ 0, 1, 2, 3 ], \@a, '@a => (0,1,2,3)';
+    eval { shift @a };
+    ok $@, $@;
+    eval { $a[0]-- };
+    ok $@, $@;
+    dunlock \@a;
+    eval { $a[0]-- };
+    ok !$@, '$a[0]--';
+    is_deeply [ -1, 1, 2, 3 ], \@a, '@a => (-1,1,2,3)';
+}
+{
     dlock( my $h = { one => 1, two => 2 } );
     is_deeply { one => 1, two => 2 }, $h, '$h => {one=>1, two=>2}';
     eval { $h = {} };
@@ -32,6 +45,19 @@ use Test::More tests => 17;
     eval { $h->{one}-- };
     ok !$@, '$h->{one}--';
     is_deeply { one => 0, two => 2 }, $h, '$h => {one=>0, two=>2}';
+}
+{
+    my %h = (one => 1, two => 2);
+    dlock \%h;
+    is_deeply { one => 1, two => 2 }, \%h, '%h => (one=>1, two=>2)';
+    eval { %h = () };
+    ok $@, $@;
+    eval { $h{one}-- };
+    ok $@, $@;
+    dunlock \%h;
+    eval { $h{one}-- };
+    ok !$@, '$h{one}--';
+    is_deeply { one => 0, two => 2 }, \%h, '%h => (one=>0, two=>2)';
 }
 {
     my $a = [];
