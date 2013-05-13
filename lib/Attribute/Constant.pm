@@ -30,7 +30,7 @@ Attribute::Constant - Make read-only variables via attribute
 
 =head1 VERSION
 
-$Id: Constant.pm,v 1.1 2013/04/03 14:37:57 dankogai Exp dankogai $
+$Id: Constant.pm,v 1.1 2013/04/03 14:37:57 dankogai Exp $
 
 =head1 SYNOPSIS
 

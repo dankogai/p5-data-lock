@@ -1,6 +1,6 @@
 #!perl
 #
-# $Id: benchmark.pl,v 1.1 2013/04/03 14:37:57 dankogai Exp dankogai $
+# $Id: benchmark.pl,v 1.1 2013/04/03 14:37:57 dankogai Exp $
 #
 use strict;
 use warnings;

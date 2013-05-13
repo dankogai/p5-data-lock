@@ -1,6 +1,6 @@
 #!perl -T
 #
-# $Id: 04-dlock.t,v 1.0 2013/04/03 06:49:25 dankogai Exp $
+# $Id: 04-dlock.t,v 1.1 2013/05/13 15:31:54 dankogai Exp dankogai $
 #
 use strict;
 use warnings;
