@@ -18,7 +18,7 @@ for my $locked ( 0, 1 ) {
     no strict 'refs';
     *{$subname} = sub {
         no warnings "uninitialized";
-        return if Internals::SvREADONLY( $_[0]) == $locked;
+        return if $_[1] and Internals::SvREADONLY( $_[0]) == $locked;
         Internals::SvREADONLY( $_[0], $locked );
         my $type = Scalar::Util::reftype( $_[0] );
         for (
@@ -28,7 +28,7 @@ for my $locked ( 0, 1 ) {
             :                    ()
           )
         {
-            &$subname($_) if ref $_;
+            &$subname($_, 1) if ref $_;
             Internals::SvREADONLY( $_, $locked );
         }
             $type eq 'ARRAY' ? Internals::SvREADONLY( @{ $_[0] }, $locked )

@@ -3,6 +3,12 @@
 # $Id: Changes,v 1.1 2013/04/03 14:37:57 dankogai Exp dankogai $
 #
 $Revision: 1.1 $ $Date: 2013/04/03 14:37:57 $
+! t/00-load.t
+! lib/Data/Lock.pm
+  Addressed: dunlock \%hash; # does not work
+  https://rt.cpan.org/Public/Bug/Display.html?id=85233
+
+1.01 2013/04/03 14:37:57 $
 ! lib/*/*.pm t/benchmark.t
   + Revised POD
   + updated benchmark
