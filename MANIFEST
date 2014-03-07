@@ -10,6 +10,7 @@ t/01-atomic.t
 t/02-avhv.t
 t/03-obj.t
 t/04-dlock.t
+t/05-dollar01.t
 t/benchmark.pl
 t/pod-coverage.t
 t/pod.t

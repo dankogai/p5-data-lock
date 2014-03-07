@@ -20,7 +20,7 @@ for my $locked ( 0, 1 ) {
         no warnings "uninitialized";
         return if $_[1] and Internals::SvREADONLY( $_[0]) == $locked;
         Internals::SvREADONLY( $_[0], $locked );
-        my $type = Scalar::Util::reftype( $_[0] );
+        return unless my $type = Scalar::Util::reftype( $_[0] );
         for (
               $type eq 'ARRAY' ? @{ $_[0] }
             : $type eq 'HASH'  ? values %{ $_[0] }
