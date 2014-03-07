@@ -2,7 +2,7 @@ package Data::Lock;
 use 5.008001;
 use warnings;
 use strict;
-our $VERSION = sprintf "%d.%02d", q$Revision: 1.2 $ =~ /(\d+)/g;
+our $VERSION = sprintf "%d.%02d", q$Revision: 1.3 $ =~ /(\d+)/g;
 
 use Attribute::Handlers;
 use Scalar::Util ();
@@ -47,7 +47,7 @@ Data::Lock - makes variables (im)?mutable
 
 =head1 VERSION
 
-$Id: Lock.pm,v 1.2 2013/05/13 15:31:54 dankogai Exp dankogai $
+$Id: Lock.pm,v 1.3 2014/03/07 18:24:43 dankogai Exp dankogai $
 
 =head1 SYNOPSIS
 
