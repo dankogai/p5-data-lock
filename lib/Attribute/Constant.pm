@@ -47,8 +47,8 @@ the document and source of L<Data::Lock> for its mechanism.
 =head1 ATTRIBUTES
 
 This module adds only one attribute, C<Constant>.  You give its
-initial value as shown.  Unlike L<Readonly>, parantheses cannot be
-ommited but it is semantically more elegant and thanks to
+initial value as shown.  Unlike L<Readonly>, parentheses cannot be
+omitted but it is semantically more elegant and thanks to
 L<Data::Lock>, it imposes almost no performance penalty.
 
 =head1 CAVEAT
@@ -113,7 +113,7 @@ On the other hand, the following works.
   print Dumper( $o, $y );
 
 Rule of the thumb is do not feed variables to constant because
-varialbes change after the attribute invocation.
+variables change after the attribute invocation.
 
 Or simply use C<Data::Lock::dlock>.
 
