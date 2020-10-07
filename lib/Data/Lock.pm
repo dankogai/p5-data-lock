@@ -97,7 +97,7 @@ explicitly. This module comes with C<dlock> and C<dunlock>.
 
   dlock($scalar);
 
-Locks $scalar and if $scalar is a reference, recursively locks referents.
+Locks C<$scalar> and if C<$scalar> is a reference, recursively locks referents.
 
 =head2 dunlock
 
@@ -185,7 +185,7 @@ L<http://search.cpan.org/dist/Data-Lock>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008-2013 Dan Kogai, all rights reserved.
+Copyright 2008-2020 Dan Kogai, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
