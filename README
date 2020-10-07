@@ -84,7 +84,7 @@ SEE ALSO
     Readonly, perlguts, perlapi
 
 AUTHOR
-    Dan Kogai, "<dankogai+gmail at gmail.com>"
+    Dan Kogai, "<dankogai at cpan.org>"
 
 BUGS
     Please report any bugs or feature requests to "bug-data-lock at

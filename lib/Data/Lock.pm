@@ -145,7 +145,7 @@ L<Readonly>, L<perlguts>, L<perlapi>
 
 =head1 AUTHOR
 
-Dan Kogai, C<< <dankogai+gmail at gmail.com> >>
+Dan Kogai, C<< <dankogai at cpan.org> >>
 
 =head1 BUGS
 

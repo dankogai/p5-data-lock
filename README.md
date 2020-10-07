@@ -100,7 +100,7 @@ See `t/benchmark.pl` for details.
 
 # AUTHOR
 
-Dan Kogai, `<dankogai+gmail at gmail.com>`
+Dan Kogai, `<dankogai at cpan.org>`
 
 # BUGS
 
